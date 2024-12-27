@@ -1,2 +1,1 @@
-# deliza_reload
-deliza_reload
+# web-list-kuota

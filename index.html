@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Kategori dan Produk</title>
+    <style>
+        /* Reset Margin dan Padding */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Latar belakang gradasi */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #6a11cb, #2575fc); /* Gradasi dari ungu ke biru */
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        /* Container produk */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out;
+    text-align: center; /* Menambahkan agar logo berada di tengah */
+}
+
+/* Hover effect pada container */
+.container:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Menyesuaikan ukuran logo */
+.logo {
+    width: 200px; /* Ganti sesuai ukuran yang diinginkan */
+    height: auto;  /* Agar proporsi gambar tetap terjaga */
+    display: block;
+    margin: 0 auto; /* Agar logo berada di tengah */
+}
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            color: #333;
+            text-align: center;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Styling untuk label dan input */
+        label {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            display: block;
+            color: #555;
+        }
+
+        select, input {
+            padding: 12px;
+            font-size: 1.1em;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 350px;
+            display: block;
+            margin-bottom: 25px;
+            transition: border-color 0.3s ease;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        select:focus, input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        /* Grid untuk produk */
+        #produkList {
+            list-style-type: none;
+            padding-left: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        #produkList li {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        #produkList li:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Warna setiap produk berbeda yang lebih mencolok */
+        #produkList li:nth-child(1) {
+            background: #ff6347; /* Tomato */
+            color: white;
+        }
+
+        #produkList li:nth-child(2) {
+            background: #ffdc00; /* Yellow */
+            color: #333;
+        }
+
+        #produkList li:nth-child(3) {
+            background: #32cd32; /* Lime Green */
+            color: white;
+        }
+
+        #produkList li:nth-child(4) {
+            background: #1e90ff; /* Dodger Blue */
+            color: white;
+        }
+
+        #produkList li:nth-child(5) {
+            background: #ff69b4; /* Hot Pink */
+            color: white;
+        }
+
+        #produkList li:nth-child(6) {
+            background: #ff8c00; /* Dark Orange */
+            color: white;
+        }
+
+        .deskripsi-produk {
+            display: none;
+            margin-top: 15px;
+            padding: 12px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            text-align: left;
+            font-size: 1.1em;
+            color: #555;
+        }
+
+        .beli-btn {
+            display: none;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 25px;
+            margin-top: 15px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .beli-btn.enabled {
+            display: inline-block;
+        }
+
+        .beli-btn:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+
+        .beli-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .warning {
+            color: red;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        /* Responsif untuk layar kecil */
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+
+            select, input {
+                width: 100%;
+                max-width: none;
+            }
+
+            #produkList {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Responsif untuk layar besar */
+        @media (min-width: 1200px) {
+            .container {
+                padding: 40px;
+            }
+
+            select {
+                width: auto;
+            }
+
+            #produkList {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <img src="logo.png" alt="Logo Deliza Reload" class="logo">
+
+        <label for="kategoriSelect">Pilih Kategori:</label>
+        <select id="kategoriSelect">
+            <option value="">--Pilih Kategori--</option>
+            <option value="akrab">Paket Akrab</option>
+        </select>
+
+        <label for="nomorTujuan">Nomor Tujuan:</label>
+        <input type="text" id="nomorTujuan" placeholder="Masukkan awalan 0" required>
+
+        <h2>Produk:</h2>
+        <ul id="produkList">
+            <!-- Produk akan ditampilkan di sini -->
+        </ul>
+
+        <div class="warning" id="warningMessage" style="display: none;">
+            Anda harus mengisi nomor tujuan sebelum membeli produk!
+        </div>
+    </div>
+
+    <script>
+        // Daftar produk berdasarkan kategori
+        const produk = {
+            akrab: [
+                { name: 'MINI', description: 'Area 1 : 40GB<br>Area 2 : 42GB<br>Area 3 : 47GB<br>Area 4 : 57GB<br><br><a href="http://bit.ly/area_akrab" target="_blank">Cek Area</a><br><br>Note : Wajib UNREG / HAPUS paket AKRAB yang masih aktif jika masih ada.', price: 'Rp 58.000' },
+                { name: 'BIG', description: 'Area 1 : 37GB<br>Area 2 : 40GB<br>Area 3 : 50GB<br>Area 4 : 74GB<br><br><a href="http://bit.ly/area_akrab" target="_blank">Cek Area</a><br><br>Note : Wajib UNREG / HAPUS paket AKRAB yang masih aktif jika masih ada.', price: 'Rp 65.000' },
+                { name: 'JUMBO', description: 'Area 1 : 67GB<br>Area 2 : 72GB<br>Area 3 : 85GB<br>Area 4 : 125GB<br><br><a href="http://bit.ly/area_akrab" target="_blank">Cek Area</a><br><br>Note : Wajib UNREG / HAPUS paket AKRAB yang masih aktif jika masih ada.', price: 'Rp 85.000' }
+            ]
+        };
+
+        const kategoriSelect = document.getElementById('kategoriSelect');
+        const produkList = document.getElementById('produkList');
+        const nomorTujuanInput = document.getElementById('nomorTujuan');
+        const warningMessage = document.getElementById('warningMessage');
+
+        // Menampilkan produk berdasarkan kategori
+        kategoriSelect.addEventListener('change', function() {
+            const kategori = kategoriSelect.value;
+            produkList.innerHTML = ''; // Menghapus produk sebelumnya
+            if (kategori && produk[kategori]) {
+                produk[kategori].forEach(item => {
+                    const li = document.createElement('li');
+                    li.textContent = item.name;
+
+                    const deskripsi = document.createElement('div');
+                    deskripsi.classList.add('deskripsi-produk');
+                    deskripsi.innerHTML = `<strong>Deskripsi:</strong> <br>${item.description} <br><strong><br>Harga:</strong> ${item.price}`;
+
+                    const beliBtn = document.createElement('button');
+                    beliBtn.classList.add('beli-btn');
+                    beliBtn.textContent = 'Beli';
+
+                    li.addEventListener('click', function() {
+                        const isDescriptionVisible = deskripsi.style.display === 'block';
+                        deskripsi.style.display = isDescriptionVisible ? 'none' : 'block';
+                        beliBtn.classList.toggle('enabled', !isDescriptionVisible);
+                    });
+
+                    beliBtn.addEventListener('click', function(event) {
+                        event.stopPropagation(); // Mencegah li click event
+                        const nomorTujuan = nomorTujuanInput.value.trim();
+                        if (!nomorTujuan) {
+                            warningMessage.style.display = 'block';
+                        } else {
+                            warningMessage.style.display = 'none';
+                            const message = `Beli paket *${item.name}* min,ini nomornya ${nomorTujuan}. Harga: *${item.price}*.`;
+                            const whatsappUrl = `https://wa.me/6285713431941?text=${encodeURIComponent(message)}`;
+                            window.open(whatsappUrl, '_blank');
+                        }
+                    });
+
+                    li.appendChild(deskripsi);
+                    li.appendChild(beliBtn);
+                    produkList.appendChild(li);
+                });
+            }
+        });
+
+        // Menangani input nomor tujuan
+        nomorTujuanInput.addEventListener('input', function() {
+            warningMessage.style.display = nomorTujuanInput.value.trim() ? 'none' : 'block';
+        });
+    </script>
+
+</body>
+</html>

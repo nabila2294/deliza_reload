@@ -3,538 +3,314 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>deliza reload</title>
+    <title>Daftar Kategori dan Produk</title>
     <style>
-        /* Background Gradasi Bergerak */
-        @keyframes gradientMove {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-    
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(45deg, #0b0168, #4892e7, #4892e7, #0b0168);
-            background-size: 400% 400%;
-            animation: gradientMove 10s ease infinite;
-            color: #333;
+        /* Reset Margin dan Padding */
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Latar belakang gradasi */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #6a11cb, #2575fc); /* Gradasi dari ungu ke biru */
+            color: #333;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
-            flex-direction: column;
+            align-items: center;
             height: 100vh;
+            flex-direction: column;
+            padding: 20px;
             overflow-x: hidden;
         }
-    
-        .header {
-            background-color: #094f88;
-            color: white;
-            width: 100%;
-            text-align: center;
-            padding: 15px 0;
-            font-size: 32px;
-            font-weight: bold;
-            letter-spacing: 2px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
 
-/* Background Gradasi Bergerak untuk .container */
-@keyframes containerGradientMove {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
+        /* Container produk */
 .container {
-    background: linear-gradient(45deg, #841288, #eff1f1, #eff1f1, #841288);
-    background-size: 400% 400%;
-    animation: containerGradientMove 10s ease infinite;
-    padding: 30px;
     width: 100%;
-    max-width: 600px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 80px;
-    margin-left: auto;
-    margin-right: auto;
-    position: relative;
-    z-index: 900;
-    flex-grow: 1;
-    max-height: 80vh;
-    overflow-y: auto;
-    border: 2px solid #f8f6f6; /* Soft border for elegance */
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out;
+    text-align: center; /* Menambahkan agar logo berada di tengah */
 }
 
-/* Menyusun logo agar berada di tengah */
-.logo-container {
-    text-align: center;
-    margin-bottom: 20px; /* Memberikan ruang di bawah logo */
+/* Hover effect pada container */
+.container:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
-/* Pengaturan ukuran logo */
+/* Menyesuaikan ukuran logo */
 .logo {
-    width: 200px; /* Atur lebar sesuai keinginan (misalnya 300px) */
-    height: auto; /* Biarkan tinggi mengikuti proporsi gambar */
-    max-width: 50%; /* Agar gambar tidak melebihi lebar kontainer */
-    max-height: 200px; /* Anda dapat mengatur tinggi maksimal logo (misalnya 200px) */
+    width: 200px; /* Ganti sesuai ukuran yang diinginkan */
+    height: auto;  /* Agar proporsi gambar tetap terjaga */
+    display: block;
+    margin: 0 auto; /* Agar logo berada di tengah */
 }
 
         h1 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            color: #333;
             text-align: center;
-            color: #2505b3;
-            margin-bottom: 20px;
-        }
-    
-        .section {
-            margin-bottom: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: stretch;
-        }
-    
-        label {
-            font-size: 16px;
             font-weight: bold;
-            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Styling untuk label dan input */
+        label {
+            font-size: 1.2em;
+            margin-bottom: 10px;
             display: block;
             color: #555;
         }
-    
-        select, input[type="text"], button {
-            width: 100%;
+
+        select, input {
             padding: 12px;
-            border: 1px solid #000000;
+            font-size: 1.1em;
+            border: 2px solid #ddd;
             border-radius: 8px;
-            font-size: 16px;
-            margin-top: 8px;
+            width: 100%;
+            max-width: 350px;
+            display: block;
+            margin-bottom: 25px;
+            transition: border-color 0.3s ease;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        select:focus, input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        /* Grid untuk produk */
+        #produkList {
+            list-style-type: none;
+            padding-left: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        #produkList li {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        #produkList li:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Warna setiap produk berbeda yang lebih mencolok */
+        #produkList li:nth-child(1) {
+            background: #ff6347; /* Tomato */
+            color: white;
+        }
+
+        #produkList li:nth-child(2) {
+            background: #ffdc00; /* Yellow */
+            color: #333;
+        }
+
+        #produkList li:nth-child(3) {
+            background: #32cd32; /* Lime Green */
+            color: white;
+        }
+
+        #produkList li:nth-child(4) {
+            background: #1e90ff; /* Dodger Blue */
+            color: white;
+        }
+
+        #produkList li:nth-child(5) {
+            background: #ff69b4; /* Hot Pink */
+            color: white;
+        }
+
+        #produkList li:nth-child(6) {
+            background: #ff8c00; /* Dark Orange */
+            color: white;
+        }
+
+        .deskripsi-produk {
+            display: none;
+            margin-top: 15px;
+            padding: 12px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            text-align: left;
+            font-size: 1.1em;
+            color: #555;
+        }
+
+        .beli-btn {
+            display: none;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 25px;
+            margin-top: 15px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .beli-btn.enabled {
             display: inline-block;
         }
-    
-        button {
-            background-color: #4892e7;
-            color: rgb(255, 255, 255);
-            font-size: 14px;
-            font-weight: normal;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
+
+        .beli-btn:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+
+        .beli-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .warning {
+            color: red;
+            font-size: 0.9em;
             margin-top: 10px;
-            width: auto;
-            padding: 6px 15px;
-            border-radius: 20px;
-            text-align: center;
         }
-    
-        button:hover {
-            background-color: #29cf00;
-        }
-    
-        /* Kontainer untuk tombol "Beli Sekarang" dan WhatsApp */
-        .button-container {
-            display: flex;
-            justify-content: space-between;
-            gap: 10px; /* Jarak antar tombol */
-        }
-    
-        /* Tombol Beli Sekarang */
-        .buy-button {
-            background-color: #4892e7;
-            color: white;
-            font-size: 14px;
-            font-weight: normal;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            padding: 6px 15px;
-            border-radius: 20px;
-            text-align: center;
-            flex: 1;
-        }
-    
-        .buy-button:hover {
-            background-color: #29cf00;
-        }
-    
-        /* Styling untuk tombol yang dipilih (method yang sudah dipilih) */
-        .selected-payment {
-            background-color: #29cf00; /* Warna hijau saat dipilih */
-            color: white; /* Warna teks putih */
-            border: 1px solid #29cf00; /* Border yang konsisten dengan warna hijau */
-        }
-    
-        /* Responsif untuk perangkat mobile */
-        @media screen and (max-width: 768px) {
+
+        /* Responsif untuk layar kecil */
+        @media (max-width: 600px) {
             .container {
                 padding: 15px;
-                margin-top: 80px;
-                width: 90%;
             }
-    
-            .header {
-                font-size: 24px;
-                padding: 12px 0;
+
+            select, input {
+                width: 100%;
+                max-width: none;
+            }
+
+            #produkList {
+                grid-template-columns: 1fr;
             }
         }
-    
-        #productPrice {
-            font-size: 20px; /* Ukuran font lebih besar */
-            font-weight: bold; /* Membuat teks lebih tebal */
-            color: #FF6347; /* Memberi warna yang mencolok (misalnya, merah tomat) */
-            background-color: #fcfbf8; /* Memberikan latar belakang sedikit kuning untuk kontras */
-            padding: 10px; /* Memberi padding untuk jarak antara teks dan batas */
-            border-radius: 8px; /* Memberikan sudut yang melengkung */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Memberikan bayangan halus di sekitar harga */
-            margin-top: 15px; /* Menambahkan jarak antara harga dan elemen lainnya */
-            text-align: center; /* Menempatkan harga di tengah */
+
+        /* Responsif untuk layar besar */
+        @media (min-width: 1200px) {
+            .container {
+                padding: 40px;
+            }
+
+            select {
+                width: auto;
+            }
+
+            #produkList {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
-    
-        /* Styling untuk deskripsi produk */
-        #productDescription {
-            font-size: 16px; /* Ukuran font standar untuk deskripsi */
-            color: #555; /* Warna teks abu-abu untuk deskripsi */
-            line-height: 1.6; /* Jarak antar baris yang nyaman dibaca */
-            padding: 15px; /* Memberikan jarak dalam deskripsi */
-            background-color: #faf8f8; /* Latar belakang yang lebih terang */
-            border-radius: 8px; /* Sudut melengkung */
-            box-sizing: border-box;
-            margin-top: 10px; /* Memberikan jarak antara deskripsi dan elemen lainnya */
-        }   
-    </style>    
+    </style>
 </head>
 <body>
 
-    <div class="header">
-        DELIZA RELOAD
-    </div>
-
     <div class="container">
-        <div class="logo-container">
-            <img src="logo.png" alt="SRC STORE Logo" class="logo">
-        </div>  
-        <button onclick="toggleInfo()">INFO</button>
-        
-        <div class="info-text" id="infoText">
-            <p>Ini adalah panel web otomatis berikut cara penggunaannya :<br>1. Masukkan data ke kolom serta pilih kategori dan produknya<br>2. Periksa lagi bahwa data dan produk yang dipilih sudah benar<br>3. Klik BELI untuk membeli produk, nanti akan diarahkan ke WhatsApp<br>4. Setelah di WhatsApp, kirim pesan yang sudah disusun otomatis oleh sistem ke nomor admin<br><br>SEMUA PESANAN DIPROSES OLEH ADMIN</p>
-        </div>
+        <img src="logo.png" alt="Logo Deliza Reload" class="logo">
 
-        <!-- Kategori Utama -->
-        <div class="section">
-            <label for="category">Pilih Kategori:</label>
-            <select id="category">
-                <option value="">-- Pilih Kategori --</option>
-                <option value="paket_otp">PAKET REGULER OTP</option>
-                <option value="paket_nonotp">PAKET AKRAB</option>
-            </select>
-        </div>
+        <label for="kategoriSelect">Pilih Kategori:</label>
+        <select id="kategoriSelect">
+            <option value="">--Pilih Kategori--</option>
+            <option value="akrab">Paket Akrab</option>
+        </select>
 
-        <!-- Sub-Kategori -->
-        <div class="section">
-            <label for="subcategory">Pilih Sub-Kategori:</label>
-            <select id="subcategory" disabled>
-                <option value="">-- Pilih Sub-Kategori --</option>
-                <option value="pengelola_akrab">PENGELOLA AKRAB</option>
-            </select>
-            <div id="subcategoryDescription" style="margin-top: 10px; color: #555; font-size: 17px;"></div>
-        </div>
+        <label for="nomorTujuan">Nomor Tujuan:</label>
+        <input type="text" id="nomorTujuan" placeholder="Masukkan awalan 0" required>
 
-        <!-- Produk -->
-        <div class="section">
-            <label for="product">Pilih Produk:</label>
-            <select id="product" disabled>
-                <option value="">-- Pilih Produk --</option>
-            </select>
-            <div id="productDescription" class="product-description-container"></div>
-            <div id="productPrice" class="price"></div>
-        </div>
-        <!-- Metode Pembayaran -->
-        <div id="paymentSection" style="display: none;">
-            <h3>Pilih Metode Pembayaran:</h3>
-            <ul id="paymentList"></ul>
-        </div>
+        <h2>Produk:</h2>
+        <ul id="produkList">
+            <!-- Produk akan ditampilkan di sini -->
+        </ul>
 
-        <!-- Input No HP -->
-        <div class="section">
-            <label for="phone">Nomor Tujuan:</label>
-            <input type="text" id="phone" placeholder="Nomor Tujuan">
-        </div>
-
-        <!-- Kontainer Tombol Beli dan WhatsApp -->
-        <div class="button-container">
-            <!-- Tombol Beli Sekarang -->
-            <button class="buy-button" onclick="submitForm()">Beli Sekarang</button>
+        <div class="warning" id="warningMessage" style="display: none;">
+            Anda harus mengisi nomor tujuan sebelum membeli produk!
         </div>
     </div>
-    
+
     <script>
-
-        let isInfoVisible = true;
-
-        function toggleInfo() {
-            const infoText = document.getElementById('infoText');
-            isInfoVisible = !isInfoVisible;
-            infoText.style.display = isInfoVisible ? 'block' : 'none';
-        }
-
-        const products = {
-            paket_otp: {
-                subcategories: {
-                    REGULER_v1: [
-                        { 
-                            name: '5gb reguler 30hari [Rp 10.000]', 
-                            code: '5GB REG',
-                            perintah: 'BELI PAKET',
-                            price: '', 
-                            paymentMethods: ['tidak',], 
-                            description: '~ PAKET REGULER<br>~ 5gb reguler+5gb whatsapp<br>~ 5gb whatsapp didapat tergantung hoki<br>~ Hanya bisa untuk XL<br>~ bisa ditumpuk,kasih jeda 2 menit setelah sukses<br>~ masa aktif 30hari',
-                            subcategoryDescription: 'Open jam 06.00-22.00, Harus OTP di <a href="https://verfikasi.my.id" target="_blank">https://verfikasi.my.id</a>'
-                        },
-                        { 
-                            name: '10gb reguler 30hari [Rp 15.000]', 
-                            code: '10GB REG',
-                            perintah: 'BELI PAKET',
-                            price: '', 
-                            paymentMethods: ['tidak',], 
-                            description: '~ PAKET REGULER<br>~ 10gb reguler+5gb<br>~ 5gb whatsapp didapat tergantung hoki<br>~ Hanya bisa untuk XL<br>~ bisa ditumpuk,kasih jeda 2 menit setelah sukses<br>~ masa aktif 30hari',
-                            subcategoryDescription: 'PAKET OPEN jAM 06.00-22.00. Cek OTP kamu <a href="https://verfikasi.my.id" target="_blank">https://verfikasi.my.id</a>'
-                        },
-                        { 
-                            name: '15gb reguler 30hari [Rp 19.000]', 
-                            code: '15GN REG',
-                            perintah: 'BELI PAKET',
-                            price: '', 
-                            paymentMethods: ['tidak',], 
-                            description: '~ PAKET REGULER<br>~ 15gb reguler+5gb<br>~ 5gb whatsapp didapat tergantung hoki<br>~ bisa ditumpuk,kasih jeda 2 menit setelah sukses<br>~ Hanya bisa untuk XL<br>~ masa aktif 30hari',
-                            subcategoryDescription: 'PAKET OPEN jAM 06.00-22.00. Cek OTP kamu <a href="https://verfikasi.my.id" target="_blank">https://verfikasi.my.id</a>'
-                        },
-                        { 
-                            name: '20gb reguler 30hari [Rp 23.000]', 
-                            code: '20GB REG',
-                            perintah: 'BELI PAKET',
-                            price: '', 
-                            paymentMethods: ['tidak',], 
-                            description: '~ PAKET REGULER<br>~ 20gb reguler+5gb<br>~ 5gb whatsapp didapat tergantung hoki<br>~ bisa ditumpuk,kasih jeda 2 menit setelah sukses<br>~ Hanya bisa untuk XL<br>~ masa aktif 30hari',
-                            subcategoryDescription: 'PAKET OPEN jAM 06.00-22.00. Cek OTP kamu <a href="https://verfikasi.my.id" target="_blank">https://verfikasi.my.id</a>'
-                        },
-                        { 
-                            name: '25gb reguler 30hari [Rp 30.000]', 
-                            code: '25GB REG',
-                            perintah: 'BELI PAKET',
-                            price: '', 
-                            paymentMethods: ['tidak',], 
-                            description: '~ PAKET REGULER<br>~ 25gb reguler+5gb<br>~ 5gb whatsapp didapat tergantung hoki<br>~ bisa ditumpuk,kasih jeda 2 menit setelah sukses<br>~ Hanya bisa untuk XL<br>~ masa aktif 30hari',
-                            subcategoryDescription: 'PAKET OPEN jAM 06.00-22.00. Cek OTP kamu <a href="https://verfikasi.my.id" target="_blank">https://verfikasi.my.id</a>'
-                        },
-                        { 
-                            name: '30gb reguler 30hari [Rp 30.000]', 
-                            code: '30GB REG',
-                            perintah: 'BELI PAKET',
-                            price: '', 
-                            paymentMethods: ['tidak',], 
-                            description: '~ PAKET REGULER<br>~ 30gb reguler+5gb<br>~ 5gb whatsapp didapat tergantung hoki<br>~ bisa ditumpuk,kasih jeda 2 menit setelah sukses<br>~ Hanya bisa untuk XL<br>~ masa aktif 30hari',
-                            subcategoryDescription: 'PAKET OPEN jAM 06.00-22.00. Cek OTP kamu <a href="https://verfikasi.my.id" target="_blank">https://verfikasi.my.id</a>'
-                        },
-                        {  
-                            name: '40gb reguler 30hari [Rp 35.000]', 
-                            code: '40GB REG',
-                            perintah: 'BELI PAKET',
-                            price: '', 
-                            paymentMethods: ['tidak',], 
-                            description: '~ PAKET REGULER<br>~ 40gb reguler+5gb<br>~ 5gb whatsapp didapat tergantung hoki<br>~ bisa ditumpuk,kasih jeda 2 menit setelah sukses<br>~ Hanya bisa untuk XL<br>~ masa aktif 30hari'
-                        }
-                   
-                    ]
-                }
-           
-            },
-            paket_nonotp: {
-                subcategories: {
-                    ANGGOTA_AKRAB: [
-                        { 
-                            name: 'Akrab Anggota (MINI)',
-                            code: 'AKRAB MINI',
-                            perintah: 'BELI PAKET',
-                            paymentMethods: ['tidak'], 
-                            description: 'Area 1 = 40 GB<br>Area 2 = 42 GB<br>Area 3 = 47 GB<br>Area 4 = 57 GB<br>WAJIB UNREG PAKET AKRAB JIKA MASIH ADA',
-                            price: '58,000',
-                            subcategoryDescription: 'PAKET NON OTP,<br>BISA UNTUK XL/AXIS'
-                        },
-                        { 
-                            name: 'Akrab Anggota (BIG)',
-                            code: 'AKRAB BIG',
-                            perintah: 'BELI PAKET',
-                            paymentMethods: ['tidak'], 
-                            description: 'Area 1 = 36 GB<br>Area 2 = 39 GB<br>Area 3 = 50 GB<br>Area 4 = 74 GB<br>WAJIB UNREG PAKET AKRAB JIKA MASIH ADA',
-                            price: '65.000'
-                        },
-                        { 
-                            name: 'Akrab Anggota (JUMBO)',
-                            code: 'AKRAB JUMBO',
-                            perintah: 'BELI PAKET',
-                            paymentMethods: ['tidak'], 
-                            description: 'Area 1 = 65 GB<br>Area 2 = 70 GB<br>Area 3 = 83 GB<br>Area 4 = 123 GB<br>WAJIB UNREG PAKET AKRAB JIKA MASIH ADA',
-                            price: '85.000'
-                        },
-                    ]
-
-                }
-            }
-
+        // Daftar produk berdasarkan kategori
+        const produk = {
+            akrab: [
+                { name: 'MINI', description: 'Area 1 : 40GB<br>Area 2 : 42GB<br>Area 3 : 47GB<br>Area 4 : 57GB<br><br><a href="http://bit.ly/area_akrab" target="_blank">Cek Area</a><br><br>Note : Wajib UNREG / HAPUS paket AKRAB yang masih aktif jika masih ada.', price: 'Rp 58.000' },
+                { name: 'BIG', description: 'Area 1 : 37GB<br>Area 2 : 40GB<br>Area 3 : 50GB<br>Area 4 : 74GB<br><br><a href="http://bit.ly/area_akrab" target="_blank">Cek Area</a><br><br>Note : Wajib UNREG / HAPUS paket AKRAB yang masih aktif jika masih ada.', price: 'Rp 65.000' },
+                { name: 'JUMBO', description: 'Area 1 : 67GB<br>Area 2 : 72GB<br>Area 3 : 85GB<br>Area 4 : 125GB<br><br><a href="http://bit.ly/area_akrab" target="_blank">Cek Area</a><br><br>Note : Wajib UNREG / HAPUS paket AKRAB yang masih aktif jika masih ada.', price: 'Rp 85.000' }
+            ]
         };
 
+        const kategoriSelect = document.getElementById('kategoriSelect');
+        const produkList = document.getElementById('produkList');
+        const nomorTujuanInput = document.getElementById('nomorTujuan');
+        const warningMessage = document.getElementById('warningMessage');
 
-        const categorySelect = document.getElementById('category');
-        const subcategorySelect = document.getElementById('subcategory');
-        const productSelect = document.getElementById('product');
-        const productPrice = document.getElementById('productPrice');
-        const productDescription = document.getElementById('productDescription');
-        const subcategoryDescription = document.getElementById('subcategoryDescription');
-        const paymentSection = document.getElementById('paymentSection');
-        const paymentList = document.getElementById('paymentList');
-        let selectedPaymentMethod = null;
+        // Menampilkan produk berdasarkan kategori
+        kategoriSelect.addEventListener('change', function() {
+            const kategori = kategoriSelect.value;
+            produkList.innerHTML = ''; // Menghapus produk sebelumnya
+            if (kategori && produk[kategori]) {
+                produk[kategori].forEach(item => {
+                    const li = document.createElement('li');
+                    li.textContent = item.name;
 
-        categorySelect.addEventListener('change', function() {
-            const category = this.value;
-            subcategorySelect.innerHTML = '<option value="">-- Pilih Sub-Kategori --</option>';
-            productSelect.innerHTML = '<option value="">-- Pilih Produk --</option>';
-            productPrice.innerHTML = '';
-            productDescription.innerHTML = '';
-            subcategoryDescription.innerHTML = '';
-            paymentSection.style.display = 'none';
+                    const deskripsi = document.createElement('div');
+                    deskripsi.classList.add('deskripsi-produk');
+                    deskripsi.innerHTML = `<strong>Deskripsi:</strong> <br>${item.description} <br><strong><br>Harga:</strong> ${item.price}`;
 
-            if (category && products[category]) {
-                const subcategories = products[category].subcategories;
-                Object.keys(subcategories).forEach(subcategory => {
-                    const option = document.createElement('option');
-                    option.value = subcategory;
-                    // Mengganti "_" dengan spasi pada subkategori
-                    option.textContent = subcategory.replace(/_/g, ' ');
-                    subcategorySelect.appendChild(option);
-                });
-                subcategorySelect.disabled = false;
-            } else {
-                subcategorySelect.disabled = true;
-            }
-        });
+                    const beliBtn = document.createElement('button');
+                    beliBtn.classList.add('beli-btn');
+                    beliBtn.textContent = 'Beli';
 
-        // Update event listener untuk subkategori dan produk
-        subcategorySelect.addEventListener('change', function() {
-            const category = categorySelect.value;
-            const subcategory = this.value;
-            productSelect.innerHTML = '<option value="">-- Pilih Produk --</option>';
-            productPrice.innerHTML = '';
-            productDescription.innerHTML = '';
-            subcategoryDescription.innerHTML = '';
-            paymentSection.style.display = 'none';
-
-            if (category && subcategory && products[category]) {
-                const subcategoryProducts = products[category].subcategories[subcategory];
-                subcategoryProducts.forEach(product => {
-                    const option = document.createElement('option');
-                    option.value = product.code;
-                    option.textContent = product.name;
-                    productSelect.appendChild(option);
-                });
-
-                // Menampilkan deskripsi subkategori
-                const subcategoryInfo = subcategoryProducts[0].subcategoryDescription;
-                subcategoryDescription.innerHTML = subcategoryInfo;
-                productSelect.disabled = false;
-            } else {
-                productSelect.disabled = true;
-            }
-        });
-
-        // Update event listener untuk produk
-        productSelect.addEventListener('change', function() {
-            const category = categorySelect.value;
-            const subcategory = subcategorySelect.value;
-            const productCode = this.value;
-            productPrice.innerHTML = '';
-            productDescription.innerHTML = '';
-            paymentSection.style.display = 'none';
-
-            if (category && subcategory && productCode && products[category]) {
-                const subcategoryProducts = products[category].subcategories[subcategory];
-                const product = subcategoryProducts.find(p => p.code === productCode);
-                if (product) {
-                    // Menampilkan harga produk dengan styling khusus
-                    productPrice.innerHTML = product.price;
-                    productDescription.innerHTML = product.description;
-                    productDescription.style.display = 'block';
-                    paymentSection.style.display = 'block';
-                    paymentList.innerHTML = '';
-
-                    // Menampilkan metode pembayaran
-                    product.paymentMethods.forEach(method => {
-                        const button = document.createElement('button');
-                        button.textContent = method;
-                        button.classList.add('payment-button');
-                        button.onclick = () => selectPaymentMethod(method, button);
-                        paymentList.appendChild(button);
+                    li.addEventListener('click', function() {
+                        const isDescriptionVisible = deskripsi.style.display === 'block';
+                        deskripsi.style.display = isDescriptionVisible ? 'none' : 'block';
+                        beliBtn.classList.toggle('enabled', !isDescriptionVisible);
                     });
-                }
+
+                    beliBtn.addEventListener('click', function(event) {
+                        event.stopPropagation(); // Mencegah li click event
+                        const nomorTujuan = nomorTujuanInput.value.trim();
+                        if (!nomorTujuan) {
+                            warningMessage.style.display = 'block';
+                        } else {
+                            warningMessage.style.display = 'none';
+                            const message = `Beli paket *${item.name}* min,ini nomornya ${nomorTujuan}. Harga: *${item.price}*.`;
+                            const whatsappUrl = `https://wa.me/6285713431941?text=${encodeURIComponent(message)}`;
+                            window.open(whatsappUrl, '_blank');
+                        }
+                    });
+
+                    li.appendChild(deskripsi);
+                    li.appendChild(beliBtn);
+                    produkList.appendChild(li);
+                });
             }
         });
 
-        function selectPaymentMethod(method, button) {
-            selectedPaymentMethod = method;
-
-            // Menghapus kelas 'selected-payment' dari semua tombol
-            document.querySelectorAll('.payment-button').forEach(btn => btn.classList.remove('selected-payment'));
-
-            // Menambahkan kelas 'selected-payment' ke tombol yang dipilih
-            button.classList.add('selected-payment');
-        }
-
-        function submitForm() {
-            const category = categorySelect.value;
-            const subcategory = subcategorySelect.value;
-            const productCode = productSelect.value;
-            const phone = document.getElementById('phone').value;
-
-            if (!subcategory || !productCode || !phone || !selectedPaymentMethod) {
-                alert('Mohon lengkapi semua informasi.');
-                return;
-            }
-
-            const selectedProduct = products[category]?.subcategories[subcategory]?.find(product => product.code === productCode);
-            const productName = selectedProduct ? selectedProduct.name : '';
-            const perintah = selectedProduct ? selectedProduct.perintah : '';
-
-            let message;
-
-            // Cek apakah payment method ada
-            if (selectedPaymentMethod !== 'tidak') {
-                // Gabungkan parameter dengan titik satu kali, pastikan tidak ada titik ganda
-                message = `${perintah} ${productCode}.${phone}.${selectedPaymentMethod}`;
-            } else {
-                // Jika payment method tidak dipilih, hanya gabungkan perintah, kode produk, dan nomor tujuan
-                message = `${perintah} ${productCode}.${phone}`;
-            }
-
-            const phoneNumber = '6285713431941';  // Ganti dengan nomor WhatsApp yang sesuai
-            const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-
-            window.open(whatsappURL, '_blank');
-        }
+        // Menangani input nomor tujuan
+        nomorTujuanInput.addEventListener('input', function() {
+            warningMessage.style.display = nomorTujuanInput.value.trim() ? 'none' : 'block';
+        });
     </script>
+
 </body>
 </html>
-    
